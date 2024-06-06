@@ -25,3 +25,12 @@ jobs:
         resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
         template: .github/workflows/template2.txt
         parameters: .github/workflows/template2.txt
+inlineScript: |
+            az deployment group create \
+              --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
+              --template-file deploy-CI-CD/.github/workflows/template2.txt \
+              --parameters storageAccountName=${{ secrets.STORAGE_ACCOUNT_NAME }} \
+                           location=${{ secrets.LOCATION }} \
+                           storageAccountType=${{ secrets.STORAGE_ACCOUNT_TYPE }} \
+                           serverFarmName=${{ secrets.SERVER_FARM_NAME }} \
+                           applicationInsightsName=${{ secrets.APPLICATION_INSIGHTS_NAME }}
