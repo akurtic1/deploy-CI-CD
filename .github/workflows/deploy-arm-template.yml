@@ -25,8 +25,12 @@ jobs:
         resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
         template: .github/workflows/template2.txt
         parameters: .github/workflows/template2.txt
+<<<<<<< HEAD
         
         inlineScript: |
+=======
+inlineScript: |
+>>>>>>> 09395d531e5d156a4dfa7df09e553ffb510e36f2
             az deployment group create \
               --resource-group ${{ secrets.RESOURCE_GROUP_NAME }} \
               --template-file deploy-CI-CD/.github/workflows/template2.txt \
@@ -34,4 +38,8 @@ jobs:
                            location=${{ secrets.LOCATION }} \
                            storageAccountType=${{ secrets.STORAGE_ACCOUNT_TYPE }} \
                            serverFarmName=${{ secrets.SERVER_FARM_NAME }} \
+<<<<<<< HEAD
                            applicationInsightsName=${{ secrets.APPLICATION_INSIGHTS_NAME }}
+=======
+                           applicationInsightsName=${{ secrets.APPLICATION_INSIGHTS_NAME }}
+>>>>>>> 09395d531e5d156a4dfa7df09e553ffb510e36f2
