@@ -23,4 +23,4 @@ jobs:
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
-        template: deploy-CI-CD/.github/workflows/template2.txt
+        template: deploy-CI-CD/.github/workflows
