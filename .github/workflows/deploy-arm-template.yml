@@ -31,3 +31,10 @@ jobs:
           storageAccountType=${{ secrets.STORAGE_ACCOUNT_TYPE }}
           serverFarmName=${{ secrets.SERVER_FARM_NAME }}
           applicationInsightsName=${{ secrets.APPLICATION_INSIGHTS_NAME }} 
+      - name: Echo parameters
+      run: |
+    echo "storageAccountName=${{ secrets.STORAGE_ACCOUNT_NAME }}"
+    echo "location=${{ secrets.LOCATION }}"
+    echo "storageAccountType=${{ secrets.STORAGE_ACCOUNT_TYPE }}"
+    echo "serverFarmName=${{ secrets.SERVER_FARM_NAME }}"
+    echo "applicationInsightsName=${{ secrets.APPLICATION_INSIGHTS_NAME }}"
