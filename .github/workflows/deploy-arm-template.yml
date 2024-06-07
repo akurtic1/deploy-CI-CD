@@ -24,4 +24,9 @@ jobs:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
         template: .github/workflows/template2.txt
-        parameters: .github/workflows/template2.txt
+         inlineScript: |
+        --parameters storageAccountName=${{ secrets.STORAGE_ACCOUNT_NAME }} \
+                           location=${{ secrets.LOCATION }} \
+                           storageAccountType=${{ secrets.STORAGE_ACCOUNT_TYPE }} \
+                           serverFarmName=${{ secrets.SERVER_FARM_NAME }} \
+                           applicationInsightsName=${{ secrets.APPLICATION_INSIGHTS_NAME }}
