@@ -1,5 +1,6 @@
 name: Deploy ARM Template
 
+#npc1
 on:
   push:
     branches:
@@ -16,7 +17,7 @@ jobs:
     - name: Azure Login
       uses: azure/login@v1
       with:
-        creds: ${{ secrets.AZURE_CREDENTIALS }}
+        creds: ${{ secrets.AZURE_CREDENTIALS }} 
 
     - name: Deploy ARM Template
       uses: azure/arm-deploy@v1
@@ -29,4 +30,4 @@ jobs:
           location=${{ secrets.LOCATION }}
           storageAccountType=${{ secrets.STORAGE_ACCOUNT_TYPE }}
           serverFarmName=${{ secrets.SERVER_FARM_NAME }}
-          applicationInsightsName=${{ secrets.APPLICATION_INSIGHTS_NAME }}
+          applicationInsightsName=${{ secrets.APPLICATION_INSIGHTS_NAME }} 
