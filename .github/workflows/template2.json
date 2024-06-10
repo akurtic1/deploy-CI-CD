@@ -4,29 +4,37 @@
     "parameters": {
         "storageAccountName": {
             "type": "string",
+            "value": "${{ secrets.STORAGE_ACCOUNT_NAME }}",
             "metadata": {
                 "description": "The name of the storage account" //npc22212222222
             }
         },
         "location": {
             "type": "string",
-            "defaultValue": "eastus"
+            "value": "${{ secrets.LOCATION }}",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Location for the storage account." 
+            }
         },
         "storageAccountType": {
             "type": "string",
             "defaultValue": "Standard_LRS",
+            "value": "${{ secrets.STORAGE_ACCOUNT_TYPE }}",
             "metadata": {
                 "description": "The SKU of the storage account"
             }
         },
         "serverFarmName": {
             "type": "string",
+             "value": "${{ secrets.SERVER_FARM_NAME }}",
             "metadata": {
                 "description": "The name of the App Service Plan (server farm)"
             }
         },
         "applicationInsightsName": {
             "type": "string",
+             "value": "${{ secrets.APPLICATION_INSIGHTS_NAME }}",
             "metadata": {
                 "description": "The name of the App Insights Resource"
             }
