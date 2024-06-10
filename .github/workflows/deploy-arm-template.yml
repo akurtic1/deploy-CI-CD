@@ -30,4 +30,4 @@ jobs:
           location=${{ secrets.LOCATION }}
           storageAccountType=${{ secrets.STORAGE_ACCOUNT_TYPE }}
           serverFarmName=${{ secrets.SERVER_FARM_NAME }}
-          applicationInsightsName=${{ secrets.APPLICATION_INSIGHTS_NAME }} 
+          applicationInsightsName=${{ secrets.APPLICATION_INSIGHTS_NAME }}
