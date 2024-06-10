@@ -1,6 +1,5 @@
 name: Deploy ARM Template
 
-#npc111
 on:
   push:
     branches:
@@ -19,15 +18,25 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }} 
 
+    - name: Debug Secret Values
+      run: |
+        echo "Storage Account Name: ${{ secrets.STORAGE_ACCOUNT_NAME }}"
+        echo "Location: ${{ secrets.LOCATION }}"
+        echo "Storage Account Type: ${{ secrets.STORAGE_ACCOUNT_TYPE }}"
+        echo "Server Farm Name: ${{ secrets.SERVER_FARM_NAME }}"
+        echo "Application Insights Name: ${{ secrets.APPLICATION_INSIGHTS_NAME }}"
+
     - name: Deploy ARM Template
       uses: azure/arm-deploy@v1
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
-        template: .github/workflows/template2.txt 
+        template: .github/workflows/template2.json
         parameters: |
-          storageAccountName=${{ secrets.STORAGE_ACCOUNT_NAME }}
-          location=${{ secrets.LOCATION }}
-          storageAccountType=${{ secrets.STORAGE_ACCOUNT_TYPE }}
-          serverFarmName=${{ secrets.SERVER_FARM_NAME }}
-          applicationInsightsName=${{ secrets.APPLICATION_INSIGHTS_NAME }} 
+          {
+            "storageAccountName": "${{ secrets.STORAGE_ACCOUNT_NAME }}",
+            "location": "${{ secrets.LOCATION }}",
+            "storageAccountType": "${{ secrets.STORAGE_ACCOUNT_TYPE }}",
+            "serverFarmName": "${{ secrets.SERVER_FARM_NAME }}",
+            "applicationInsightsName": "${{ secrets.APPLICATION_INSIGHTS_NAME }}"
+          }
