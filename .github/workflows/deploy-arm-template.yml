@@ -1,6 +1,6 @@
 name: Deploy ARM Template
 
-#npccppc2
+#npccppc22
 on:
   push:
     branches:
@@ -25,4 +25,4 @@ jobs:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
         template: .github/workflows/template2.json
-        parametersFile: .github/workflows/parameters2.json
+        parameters: .github/workflows/parameters2.json
