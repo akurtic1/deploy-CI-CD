@@ -6,7 +6,7 @@
         "value": "${{ secrets.STORAGE_ACCOUNT_NAME }}"
       },
       "location": {
-        "value": "${{ secrets.LOCATION }}" //tes22
+        "value": "${{ secrets.LOCATION }}" 
       },
       "storageAccountType": {
         "value": "${{ secrets.STORAGE_ACCOUNT_TYPE }}"
