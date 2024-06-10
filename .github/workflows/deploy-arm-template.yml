@@ -1,6 +1,6 @@
 name: Deploy ARM Template
 
-#npc1112
+#npc111222
 on:
   push:
     branches:
@@ -25,9 +25,3 @@ jobs:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
         template: .github/workflows/template2.txt 
-        parameters: |
-          storageAccountName=${{ secrets.STORAGE_ACCOUNT_NAME }}
-          location=${{ secrets.LOCATION }}
-          storageAccountType=${{ secrets.STORAGE_ACCOUNT_TYPE }}
-          serverFarmName=${{ secrets.SERVER_FARM_NAME }}
-          applicationInsightsName=${{ secrets.APPLICATION_INSIGHTS_NAME }} 
