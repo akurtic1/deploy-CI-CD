@@ -1,5 +1,5 @@
 name: Deploy ARM Template
-#npc222
+#npc2222
 on:
   push:
     branches:
@@ -17,14 +17,6 @@ jobs:
       uses: azure/login@v1
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }} 
-
-    - name: Debug Secret Values
-      run: |
-        echo "Storage Account Name: ${{ secrets.STORAGE_ACCOUNT_NAME }}"
-        echo "Location: ${{ secrets.LOCATION }}"
-        echo "Storage Account Type: ${{ secrets.STORAGE_ACCOUNT_TYPE }}"
-        echo "Server Farm Name: ${{ secrets.SERVER_FARM_NAME }}"
-        echo "Application Insights Name: ${{ secrets.APPLICATION_INSIGHTS_NAME }}"
 
     - name: Deploy ARM Template
       uses: azure/arm-deploy@v1
