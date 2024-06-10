@@ -26,3 +26,4 @@ jobs:
         resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
         template: .github/workflows/template2.json
         parameters: .github/workflows/parameters2.json
+
