@@ -1,0 +1,22 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+      "storageAccountName": {
+        "value": "${{ secrets.STORAGE_ACCOUNT_NAME }}"
+      },
+      "location": {
+        "value": "${{ secrets.LOCATION }}"
+      },
+      "storageAccountType": {
+        "value": "${{ secrets.STORAGE_ACCOUNT_TYPE }}"
+      },
+      "serverFarmName": {
+        "value": "${{ secrets.SERVER_FARM_NAME }}"
+      },
+      "applicationInsightsName": {
+        "value": "${{ secrets.APPLICATION_INSIGHTS_NAME }}"
+      }
+    }
+  }
+  
