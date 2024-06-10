@@ -19,15 +19,15 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }} 
 
-    - name: Deploy ARM Template
-      uses: azure/arm-deploy@v1
-      with:
-        subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-        resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
-        template: .github/workflows/template2.txt 
-        parameters: |
-          storageAccountName=${{ secrets.STORAGE_ACCOUNT_NAME }}
-          location=${{ secrets.LOCATION }}
-          storageAccountType=${{ secrets.STORAGE_ACCOUNT_TYPE }}
-          serverFarmName=${{ secrets.SERVER_FARM_NAME }}
-          applicationInsightsName=${{ secrets.APPLICATION_INSIGHTS_NAME }}
+        - name: Deploy ARM Template
+        +  uses: azure/arm-deploy@v1
+        +  with:
+        +    subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+        +    resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
+        +    template: .github/workflows/template2.txt 
+        +    parameters: |
+        +      storageAccountName=${{ secrets.STORAGE_ACCOUNT_NAME }}
+        +      location=${{ secrets.LOCATION }}
+        +      storageAccountType=${{ secrets.STORAGE_ACCOUNT_TYPE }}
+        +      serverFarmName=${{ secrets.SERVER_FARM_NAME }}
+        +      applicationInsightsName=${{ secrets.APPLICATION_INSIGHTS_NAME }}
