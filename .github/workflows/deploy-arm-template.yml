@@ -1,5 +1,5 @@
 name: Deploy ARM Template
-#npc222222222
+#npc22222222
 on:
   push:
     branches:
