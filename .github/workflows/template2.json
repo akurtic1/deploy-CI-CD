@@ -119,7 +119,7 @@
             }
         },
         {
-            "name": "cosmosdbaccount99tuzla1",
+            "name": "cosmosdbaccount99tzhc11",
             "type": "Microsoft.DocumentDB/databaseAccounts",
             "apiVersion": "2023-11-15",
             "location": "[parameters('location')]",
