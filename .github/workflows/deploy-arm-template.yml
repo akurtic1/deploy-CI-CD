@@ -20,10 +20,14 @@ jobs:
 
     - name: Ensure all required secrets are set
       run: |
-        if [ -z "${{ secrets.LOCATION }}" ] || [ -z "${{ secrets.STORAGE_ACCOUNT_NAME }}" ] || [ -z "${{ secrets.STORAGE_ACCOUNT_TYPE }}" ] || [ -z "${{ secrets.SERVER_FARM_NAME }}" ] || [ -z "${{ secrets.APPLICATION_INSIGHTS_NAME }}" ]; then
+        if [ -z "${{ secrets.LOCATION }}" ] || [ -z "${{ secrets.STORAGE_ACCOUNT_TYPE }}" ] || [ -z "${{ secrets.SERVER_FARM_NAME }}" ] || [ -z "${{ secrets.APPLICATION_INSIGHTS_NAME }}" ]; then
           echo "One or more required secrets are not set"
           exit 1
         fi
+
+    - name: Generate unique storage account name
+      id: generate_name
+      run: echo "##[set-output name=storageAccountName;]$(echo storacc$(date +%s))"
 
     - name: Update Parameters File
       run: |
@@ -32,7 +36,7 @@ jobs:
           "contentVersion": "1.0.0.0",
           "parameters": {
             "storageAccountName": {
-              "value": "'"${{ secrets.STORAGE_ACCOUNT_NAME }}"'"
+              "value": "'"${{ steps.generate_name.outputs.storageAccountName }}"'"
             },
             "location": {
               "value": "'"${{ secrets.LOCATION }}"'"
