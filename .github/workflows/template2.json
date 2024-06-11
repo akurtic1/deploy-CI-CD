@@ -5,7 +5,7 @@
         "storageAccountName": {
             "type": "string",
             "metadata": {
-                "description": "The name of the storage account" //npc222222222
+                "description": "The name of the storage account" //npc2222222
             }
         },
         "location": {
@@ -52,38 +52,35 @@
                 "defaultToOAuthAuthentication": true
             }
         },
-
         {
-    "type": "microsoft.insights/components",
-    "apiVersion": "2014-04-01",
-    "name": "[parameters('applicationInsightsName')]",
-    "location": "[parameters('location')]",
-    "kind": "web",
-    "properties": {
-        "Application_Type": "web"
-    }
-},
-
-{
-        "type": "Microsoft.Web/serverfarms",
-        "apiVersion": "2023-12-01",
-        "name": "[parameters('serverFarmName')]",
-        "location": "[parameters('location')]",
-        "sku": {
-            "name": "B1",
-            "capacity": 1
-        }
-    },
-
+            "type": "microsoft.insights/components",
+            "apiVersion": "2014-04-01",
+            "name": "[parameters('applicationInsightsName')]",
+            "location": "[parameters('location')]",
+            "kind": "web",
+            "properties": {
+                "Application_Type": "web"
+            }
+        },
+        {
+            "type": "Microsoft.Web/serverfarms",
+            "apiVersion": "2023-12-01",
+            "name": "[parameters('serverFarmName')]",
+            "location": "[parameters('location')]",
+            "sku": {
+                "name": "B1",
+                "capacity": 1
+            }
+        },
         {
             "name": "appchallengefunc",
             "type": "Microsoft.Web/sites",
             "apiVersion": "2022-09-01",
-            "location": "[resourceGroup().location]",
+            "location": "[parameters('location')]",
             "kind": "functionapp",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/serverfarms', parameters('serverFarmName'))]",
-                "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
+                 "[resourceId('Microsoft.Web/serverfarms', parameters('serverFarmName'))]",
+                 "[resourceId('Microsoft.Storage/storageAccounts', parameters('storageAccountName'))]"
             ],
             "properties": {
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', parameters('serverFarmName'))]",
@@ -121,36 +118,33 @@
                 }
             }
         },
-
-   {
-    "name": "cosmosdbaccount99tuzla1",
-    "type": "Microsoft.DocumentDB/databaseAccounts",
-    "apiVersion": "2023-11-15",
-    "location": "[resourceGroup().location]",
-    "kind": "GlobalDocumentDB",
-
-    "properties": {
-        "consistencyPolicy": {
-            "defaultConsistencyLevel": "Eventual",
-            "maxStalenessPrefix": 1,
-            "maxIntervalInSeconds": 5
-        },
-        "locations": [
-            {
-                "locationName": "[resourceGroup().location]",
-                "failoverPriority": 0
+        {
+            "name": "cosmosdbaccount99tuzla1",
+            "type": "Microsoft.DocumentDB/databaseAccounts",
+            "apiVersion": "2023-11-15",
+            "location": "[parameters('location')]",
+            "kind": "GlobalDocumentDB",
+            "properties": {
+                "consistencyPolicy": {
+                    "defaultConsistencyLevel": "Eventual",
+                    "maxStalenessPrefix": 1,
+                    "maxIntervalInSeconds": 5
+                },
+                "locations": [
+                    {
+                        "locationName": "[parameters('location')]",
+                        "failoverPriority": 0
+                    }
+                ],
+                "databaseAccountOfferType": "Standard",
+                "enableAutomaticFailover": true,
+                "capabilities": [
+                    {
+                        "name": "EnableTable"
+                    }
+                ]
             }
-        ],
-        "databaseAccountOfferType": "Standard",
-        "enableAutomaticFailover": true,
-        "capabilities": [
-            {
-                "name": "EnableTable"
-            }
-        ]
-    }
-   }
-
+        }
     ],
     "outputs": {}
 }
