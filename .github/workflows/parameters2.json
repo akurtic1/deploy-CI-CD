@@ -3,7 +3,7 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
       "storageAccountName": {
-        "value": "${{ secrets.STORAGE_ACCOUNT_NAME }}" //npc2222222223322
+        "value": "${{ secrets.STORAGE_ACCOUNT_NAME }}" //npc222222
       },
       "location": {
         "value": "${{ secrets.LOCATION }}" 

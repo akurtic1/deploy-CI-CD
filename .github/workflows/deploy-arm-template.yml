@@ -18,22 +18,36 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }} 
 
-    - name: Update Parameters File
+    - name: Ensure all required secrets are set
       run: |
-        # Ensure all required secrets are set
         if [ -z "${{ secrets.LOCATION }}" ] || [ -z "${{ secrets.STORAGE_ACCOUNT_NAME }}" ] || [ -z "${{ secrets.STORAGE_ACCOUNT_TYPE }}" ] || [ -z "${{ secrets.SERVER_FARM_NAME }}" ] || [ -z "${{ secrets.APPLICATION_INSIGHTS_NAME }}" ]; then
           echo "One or more required secrets are not set"
           exit 1
         fi
-        
-        # Create a temporary parameters file with updated values
-        jq --arg location "${{ secrets.LOCATION }}" \
-           --arg storageAccountName "${{ secrets.STORAGE_ACCOUNT_NAME }}" \
-           --arg storageAccountType "${{ secrets.STORAGE_ACCOUNT_TYPE }}" \
-           --arg serverFarmName "${{ secrets.SERVER_FARM_NAME }}" \
-           --arg applicationInsightsName "${{ secrets.APPLICATION_INSIGHTS_NAME }}" \
-           '.parameters.location.value = $location | .parameters.storageAccountName.value = $storageAccountName | .parameters.storageAccountType.value = $storageAccountType | .parameters.serverFarmName.value = $serverFarmName | .parameters.applicationInsightsName.value = $applicationInsightsName' \
-           .github/workflows/parameters2.json > updated_parameters2.json
+
+    - name: Update Parameters File
+      run: |
+        echo '{
+          "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+          "contentVersion": "1.0.0.0",
+          "parameters": {
+            "storageAccountName": {
+              "value": "'"${{ secrets.STORAGE_ACCOUNT_NAME }}"'"
+            },
+            "location": {
+              "value": "'"${{ secrets.LOCATION }}"'"
+            },
+            "storageAccountType": {
+              "value": "'"${{ secrets.STORAGE_ACCOUNT_TYPE }}"'"
+            },
+            "serverFarmName": {
+              "value": "'"${{ secrets.SERVER_FARM_NAME }}"'"
+            },
+            "applicationInsightsName": {
+              "value": "'"${{ secrets.APPLICATION_INSIGHTS_NAME }}"'"
+            }
+          }
+        }' > updated_parameters2.json
 
         cat updated_parameters2.json
 
