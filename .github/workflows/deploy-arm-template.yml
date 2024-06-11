@@ -1,5 +1,5 @@
 name: Deploy ARM Template
-#npc22222222222
+#npc22222222
 on:
   push:
     branches:
@@ -18,18 +18,22 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }} 
 
-    - name: Check if LOCATION secret is set
-      run: |
-        if [ -z "${{ secrets.LOCATION }}" ]; then
-          echo "LOCATION secret is not set"
-          exit 1
-        fi
-
     - name: Update Parameters File
       run: |
+        # Ensure all required secrets are set
+        if [ -z "${{ secrets.LOCATION }}" ] || [ -z "${{ secrets.STORAGE_ACCOUNT_NAME }}" ] || [ -z "${{ secrets.STORAGE_ACCOUNT_TYPE }}" ] || [ -z "${{ secrets.SERVER_FARM_NAME }}" ] || [ -z "${{ secrets.APPLICATION_INSIGHTS_NAME }}" ]; then
+          echo "One or more required secrets are not set"
+          exit 1
+        fi
+        
+        # Replace placeholders with actual secret values
+        sed -i 's|\${{ secrets.LOCATION }}|'"${{ secrets.LOCATION }}"'|g' .github/workflows/parameters2.json
+        sed -i 's|\${{ secrets.STORAGE_ACCOUNT_NAME }}|'"${{ secrets.STORAGE_ACCOUNT_NAME }}"'|g' .github/workflows/parameters2.json
+        sed -i 's|\${{ secrets.STORAGE_ACCOUNT_TYPE }}|'"${{ secrets.STORAGE_ACCOUNT_TYPE }}"'|g' .github/workflows/parameters2.json
+        sed -i 's|\${{ secrets.SERVER_FARM_NAME }}|'"${{ secrets.SERVER_FARM_NAME }}"'|g' .github/workflows/parameters2.json
+        sed -i 's|\${{ secrets.APPLICATION_INSIGHTS_NAME }}|'"${{ secrets.APPLICATION_INSIGHTS_NAME }}"'|g' .github/workflows/parameters2.json
+
         cat .github/workflows/parameters2.json
-        jq --arg location "${{ secrets.LOCATION }}" '.parameters.location.value = $location' .github/workflows/parameters2.json > updated_parameters2.json
-        cat updated_parameters2.json
 
     - name: Deploy ARM Template
       uses: azure/arm-deploy@v1
@@ -37,4 +41,4 @@ jobs:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
         template: .github/workflows/template2.json
-        parameters: updated_parameters2.json
+        parameters: .github/workflows/parameters2.json
