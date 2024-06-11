@@ -1,5 +1,5 @@
 name: Deploy ARM Template
-#npc22222222
+#npc222222222
 on:
   push:
     branches:
@@ -18,10 +18,14 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }} 
 
+    - name: Update Parameters File
+      run: |
+        jq --arg location "${{ secrets.LOCATION }}" '.parameters.location.value = $location' .github/workflows/parameters2.json > updated_parameters2.json
+
     - name: Deploy ARM Template
       uses: azure/arm-deploy@v1
       with:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
         template: .github/workflows/template2.json
-        parameters: .github/workflows/parameters2.json
+        parameters: updated_parameters2.json
