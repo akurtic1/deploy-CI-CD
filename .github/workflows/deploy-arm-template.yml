@@ -26,14 +26,16 @@ jobs:
           exit 1
         fi
         
-        # Replace placeholders with actual secret values
-        sed -i 's|\${{ secrets.LOCATION }}|'"${{ secrets.LOCATION }}"'|g' .github/workflows/parameters2.json
-        sed -i 's|\${{ secrets.STORAGE_ACCOUNT_NAME }}|'"${{ secrets.STORAGE_ACCOUNT_NAME }}"'|g' .github/workflows/parameters2.json
-        sed -i 's|\${{ secrets.STORAGE_ACCOUNT_TYPE }}|'"${{ secrets.STORAGE_ACCOUNT_TYPE }}"'|g' .github/workflows/parameters2.json
-        sed -i 's|\${{ secrets.SERVER_FARM_NAME }}|'"${{ secrets.SERVER_FARM_NAME }}"'|g' .github/workflows/parameters2.json
-        sed -i 's|\${{ secrets.APPLICATION_INSIGHTS_NAME }}|'"${{ secrets.APPLICATION_INSIGHTS_NAME }}"'|g' .github/workflows/parameters2.json
+        # Create a temporary parameters file with updated values
+        jq --arg location "${{ secrets.LOCATION }}" \
+           --arg storageAccountName "${{ secrets.STORAGE_ACCOUNT_NAME }}" \
+           --arg storageAccountType "${{ secrets.STORAGE_ACCOUNT_TYPE }}" \
+           --arg serverFarmName "${{ secrets.SERVER_FARM_NAME }}" \
+           --arg applicationInsightsName "${{ secrets.APPLICATION_INSIGHTS_NAME }}" \
+           '.parameters.location.value = $location | .parameters.storageAccountName.value = $storageAccountName | .parameters.storageAccountType.value = $storageAccountType | .parameters.serverFarmName.value = $serverFarmName | .parameters.applicationInsightsName.value = $applicationInsightsName' \
+           .github/workflows/parameters2.json > updated_parameters2.json
 
-        cat .github/workflows/parameters2.json
+        cat updated_parameters2.json
 
     - name: Deploy ARM Template
       uses: azure/arm-deploy@v1
@@ -41,4 +43,4 @@ jobs:
         subscriptionId: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
         resourceGroupName: ${{ secrets.AZURE_RESOURCE_GROUP }}
         template: .github/workflows/template2.json
-        parameters: .github/workflows/parameters2.json
+        parameters: updated_parameters2.json
