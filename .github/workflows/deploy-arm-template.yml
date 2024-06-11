@@ -1,5 +1,5 @@
 name: Deploy ARM Template
-#npc222222222
+#npc22222222
 on:
   push:
     branches:
@@ -18,9 +18,18 @@ jobs:
       with:
         creds: ${{ secrets.AZURE_CREDENTIALS }} 
 
+    - name: Check if LOCATION secret is set
+      run: |
+        if [ -z "${{ secrets.LOCATION }}" ]; then
+          echo "LOCATION secret is not set"
+          exit 1
+        fi
+
     - name: Update Parameters File
       run: |
+        cat .github/workflows/parameters2.json
         jq --arg location "${{ secrets.LOCATION }}" '.parameters.location.value = $location' .github/workflows/parameters2.json > updated_parameters2.json
+        cat updated_parameters2.json
 
     - name: Deploy ARM Template
       uses: azure/arm-deploy@v1

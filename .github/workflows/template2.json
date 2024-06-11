@@ -5,7 +5,7 @@
         "storageAccountName": {
             "type": "string",
             "metadata": {
-                "description": "The name of the storage account" //npc2222222
+                "description": "The name of the storage account" //npc222222233
             }
         },
         "location": {
